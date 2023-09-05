@@ -34,12 +34,14 @@
 							<th>Number 1</th>
 							<th>Operation</th>
 							<th>Number 2</th>
+							<th>Result</th>
 						</tr>
 					</thead>
 					<tbody id="addition-table-body"></tbody>
 				</table>
 
 				<button id="copyAdditionTable">Copy Addition Table to Clipboard</button>
+				<button id="calculateAdditionResults">Result</button>
 
 			</div>
 			<div>
@@ -50,12 +52,14 @@
 							<th>Number 1</th>
 							<th>Operation</th>
 							<th>Number 2</th>
+							<th>Result</th>
 						</tr>
 					</thead>
 					<tbody id="subtraction-table-body"></tbody>
 				</table>
 
 				<button id="copySubtractionTable">Copy Subtraction Table to Clipboard</button>
+				<button id="calculateSubtractionResults">Result</button>
 			</div>
 		</div>
 
@@ -79,6 +83,7 @@
                     <td>${num1}</td>
                     <td>${operation}</td>
                     <td>${num2}</td>
+                    <td></td>
                 `;
 					tableBody.appendChild(row);
 				}
@@ -99,6 +104,7 @@
                     <td>${num1}</td>
                     <td>${operation}</td>
                     <td>${num2}</td>
+                    <td></td>
                 `;
 					tableBody.appendChild(row);
 				}
@@ -129,6 +135,32 @@
 					Array.from(row.querySelectorAll('td')).map(td => td.textContent).join('\t')
 				).join('\n');
 				copyTextToClipboard(tableContent);
+			});
+
+
+
+
+			function calculateResults(tableId) {
+				const rows = document.querySelectorAll(`#${tableId} tr`);
+				rows.forEach(row => {
+					const num1 = parseFloat(row.cells[0].textContent);
+					const operation = row.cells[1].textContent;
+					const num2 = parseFloat(row.cells[2].textContent);
+					let result;
+					if (operation === '╋') {
+						result = num1 + num2;
+					} else if (operation === '━') {
+						result = num1 - num2;
+					}
+					row.cells[3].textContent = result;
+				});
+			}
+			document.getElementById('calculateAdditionResults').addEventListener('click', function () {
+				calculateResults('addition-table-body');
+			});
+
+			document.getElementById('calculateSubtractionResults').addEventListener('click', function () {
+				calculateResults('subtraction-table-body');
 			});
 		</script>
 	</body>
