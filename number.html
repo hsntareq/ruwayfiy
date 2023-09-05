@@ -8,6 +8,7 @@
 		<style>
 			table {
 				border-collapse: collapse;
+				margin-bottom: 20px;
 			}
 
 			td {
@@ -19,7 +20,7 @@
 	</head>
 
 	<body>
-		<div style="display: flex;gap:100px;justify-content: center;">
+		<div style="display: flex;justify-content: center;gap: 100px;">
 			<div>
 				<h2>Addition Problems</h2>
 				<table>
@@ -32,8 +33,10 @@
 					</thead>
 					<tbody id="addition-table-body"></tbody>
 				</table>
-			</div>
 
+				<button id="copyAdditionTable">Copy Addition Table to Clipboard</button>
+
+			</div>
 			<div>
 				<h2>Subtraction Problems</h2>
 				<table>
@@ -46,6 +49,8 @@
 					</thead>
 					<tbody id="subtraction-table-body"></tbody>
 				</table>
+
+				<button id="copySubtractionTable">Copy Subtraction Table to Clipboard</button>
 			</div>
 		</div>
 
@@ -58,11 +63,11 @@
 				const tableBody = document.getElementById('addition-table-body');
 				tableBody.innerHTML = '';
 
-				for (let i = 0; i < 10; i++) { // Generate 5 addition problems
+				for (let i = 0; i < 5; i++) { // Generate 5 addition problems
 					const num1 = getRandomNumber(5, 99);
 					const num2 = getRandomNumber(5, 99);
 
-					const operation = '+';
+					const operation = '╋';
 
 					const row = document.createElement('tr');
 					row.innerHTML = `
@@ -78,11 +83,11 @@
 				const tableBody = document.getElementById('subtraction-table-body');
 				tableBody.innerHTML = '';
 
-				for (let i = 0; i < 10; i++) { // Generate 5 subtraction problems
+				for (let i = 0; i < 5; i++) { // Generate 5 subtraction problems
 					const num1 = getRandomNumber(10, 99); // First number is greater
 					const num2 = getRandomNumber(5, num1); // Second number is less than the first
 
-					const operation = '-';
+					const operation = '━';
 
 					const row = document.createElement('tr');
 					row.innerHTML = `
@@ -96,6 +101,30 @@
 
 			generateAdditionProblems(); // Generate addition problems on page load
 			generateSubtractionProblems(); // Generate subtraction problems on page load
+
+			function copyTextToClipboard(text) {
+				const textArea = document.createElement("textarea");
+				textArea.value = text;
+				textArea.style.cssText = 'position:absolute;left:-9999px;text-align:center;'; // Center-align text
+				document.body.appendChild(textArea);
+				textArea.select();
+				document.execCommand('copy');
+				document.body.removeChild(textArea);
+			}
+
+			document.getElementById('copyAdditionTable').addEventListener('click', function () {
+				const tableContent = Array.from(document.querySelectorAll('#addition-table-body tr')).map(row =>
+					Array.from(row.querySelectorAll('td')).map(td => td.textContent).join('\t')
+				).join('\n');
+				copyTextToClipboard(tableContent);
+			});
+
+			document.getElementById('copySubtractionTable').addEventListener('click', function () {
+				const tableContent = Array.from(document.querySelectorAll('#subtraction-table-body tr')).map(row =>
+					Array.from(row.querySelectorAll('td')).map(td => td.textContent).join('\t')
+				).join('\n');
+				copyTextToClipboard(tableContent);
+			});
 		</script>
 	</body>
 
