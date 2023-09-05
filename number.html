@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Math Problems for Kids</title>
+		<style>
+			table {
+				border-collapse: collapse;
+			}
+
+			td {
+				border: 1px solid black;
+				padding: 10px;
+				text-align: center;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div style="display: flex;gap:100px;justify-content: center;">
+			<div>
+				<h2>Addition Problems</h2>
+				<table>
+					<thead>
+						<tr>
+							<th>Number 1</th>
+							<th>Operation</th>
+							<th>Number 2</th>
+						</tr>
+					</thead>
+					<tbody id="addition-table-body"></tbody>
+				</table>
+			</div>
+
+			<div>
+				<h2>Subtraction Problems</h2>
+				<table>
+					<thead>
+						<tr>
+							<th>Number 1</th>
+							<th>Operation</th>
+							<th>Number 2</th>
+						</tr>
+					</thead>
+					<tbody id="subtraction-table-body"></tbody>
+				</table>
+			</div>
+		</div>
+
+		<script>
+			function getRandomNumber(min, max) {
+				return Math.floor(Math.random() * (max - min + 1)) + min;
+			}
+
+			function generateAdditionProblems() {
+				const tableBody = document.getElementById('addition-table-body');
+				tableBody.innerHTML = '';
+
+				for (let i = 0; i < 10; i++) { // Generate 5 addition problems
+					const num1 = getRandomNumber(5, 99);
+					const num2 = getRandomNumber(5, 99);
+
+					const operation = '+';
+
+					const row = document.createElement('tr');
+					row.innerHTML = `
+                    <td>${num1}</td>
+                    <td>${operation}</td>
+                    <td>${num2}</td>
+                `;
+					tableBody.appendChild(row);
+				}
+			}
+
+			function generateSubtractionProblems() {
+				const tableBody = document.getElementById('subtraction-table-body');
+				tableBody.innerHTML = '';
+
+				for (let i = 0; i < 10; i++) { // Generate 5 subtraction problems
+					const num1 = getRandomNumber(10, 99); // First number is greater
+					const num2 = getRandomNumber(5, num1); // Second number is less than the first
+
+					const operation = '-';
+
+					const row = document.createElement('tr');
+					row.innerHTML = `
+                    <td>${num1}</td>
+                    <td>${operation}</td>
+                    <td>${num2}</td>
+                `;
+					tableBody.appendChild(row);
+				}
+			}
+
+			generateAdditionProblems(); // Generate addition problems on page load
+			generateSubtractionProblems(); // Generate subtraction problems on page load
+		</script>
+	</body>
+
+</html>
